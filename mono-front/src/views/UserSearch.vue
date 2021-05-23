@@ -32,6 +32,7 @@
 
 <script lang="ts">
 import { defineComponent, reactive } from 'vue';
+import axios from 'axios'
 
 interface User {
   id: string;
@@ -48,16 +49,14 @@ export default defineComponent({
 
     const state = reactive<State>({
       userName: '',
-      users: [
-        { id: "001", name: "Tanaka" },
-        { id: "002", name: "Tamura" },
-        { id: "003", name: "Nakata" }
-      ]
+      users: []
     })
 
-    const onClickSearch = () => {
-      window.alert(state.userName)
-      return
+    const onClickSearch = async () => {
+      axios.get<User[]>("http://localhost:3000/users")
+        .then(res => {
+          state.users = res.data;
+        })
     }
 
     return {
