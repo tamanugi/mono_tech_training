@@ -19,17 +19,9 @@
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td><a href="detail.html">001</a></td>
-            <td>Tanaka</td>
-          </tr>
-          <tr>
-            <td><a href="detail.html">002</a></td>
-            <td>Tamura</td>
-          </tr>
-          <tr>
-            <td><a href="detail.html">003</a></td>
-            <td>Nakamura</td>
+          <tr v-for="user in state.users" :key="user.id">
+            <td><a href="detail.html">{{user.id}}</a></td>
+            <td>{{user.name}}</td>
           </tr>
         </tbody>
       </table>
@@ -41,8 +33,13 @@
 <script lang="ts">
 import { defineComponent, reactive } from 'vue';
 
+interface User {
+  id: string;
+  name: string;
+}
 interface State {
   userName: string
+  users: User[]
 }
 
 export default defineComponent({
@@ -50,7 +47,12 @@ export default defineComponent({
   setup(_, context) {
 
     const state = reactive<State>({
-      userName: ''
+      userName: '',
+      users: [
+        { id: "001", name: "Tanaka" },
+        { id: "002", name: "Tamura" },
+        { id: "003", name: "Nakata" }
+      ]
     })
 
     const onClickSearch = () => {
