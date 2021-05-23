@@ -4,7 +4,7 @@
       <h3>検索条件</h3>
       <div>
         <label>User Name</label>
-        <input type="text" v-model="userName">
+        <input type="text" v-model="state.userName">
         <button @click="onClickSearch()">Search</button>
       </div>
     </div>
@@ -39,10 +39,30 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent, reactive } from 'vue';
+
+interface State {
+  userName: string
+}
 
 export default defineComponent({
   name: 'UserSearch',
+  setup(_, context) {
+
+    const state = reactive<State>({
+      userName: ''
+    })
+
+    const onClickSearch = () => {
+      window.alert(state.userName)
+      return
+    }
+
+    return {
+      state,
+      onClickSearch
+    }
+  },
   components: {
   },
 });
