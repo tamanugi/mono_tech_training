@@ -12,7 +12,7 @@
 
 <script lang="ts">
 import axios from 'axios';
-import { defineComponent, onMounted, reactive } from 'vue';
+import { defineComponent, reactive } from 'vue';
 import { useRoute } from 'vue-router'
 
 interface User {
@@ -25,18 +25,16 @@ interface State {
 
 export default defineComponent({
   name: 'UserSearch',
-  setup() {
+  async setup() {
     const route = useRoute()
     const { id } = route.params
-
-    const state = reactive<State>({})
-
-    onMounted(() => {
-      axios.get<User[]>("http://localhost:3000/users")
+    const user =
+      await axios.get<User[]>("http://localhost:3000/users")
         .then(res => {
-          state.user = res.data.find(user => user.id === id);
+          return res.data.find(u => u.id === id);
         })
-    })
+
+    const state = reactive<State>({user})
 
     return {
         state
