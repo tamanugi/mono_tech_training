@@ -1,11 +1,17 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
 import UserSearch from '../views/UserSearch.vue'
+import UserDetail from '@/views/UserDetail.vue'
 
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
     name: 'UserSearch',
     component: UserSearch
+  },
+  {
+    path: '/:id',
+    name: 'UserDetail',
+    component: UserDetail
   },
   {
     path: '/about',

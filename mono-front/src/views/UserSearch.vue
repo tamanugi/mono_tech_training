@@ -20,7 +20,7 @@
         </thead>
         <tbody>
           <tr v-for="user in state.users" :key="user.id">
-            <td><a href="detail.html">{{user.id}}</a></td>
+            <td><a :href='`/${user.id}`'>{{user.id}}</a></td>
             <td>{{user.name}}</td>
           </tr>
         </tbody>
