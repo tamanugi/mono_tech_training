@@ -9,6 +9,7 @@
     "test:e2e": "vue-cli-service test:e2e"
   },
   "dependencies": {
+    "axios": "^0.21.1",
     "core-js": "^3.6.5",
     "vue": "^2.6.11",
     "vue-class-component": "^7.2.3",
@@ -16,6 +17,7 @@
     "vue-router": "^3.2.0"
   },
   "devDependencies": {
+    "@types/axios": "^0.14.0",
     "@types/chai": "^4.2.11",
     "@types/mocha": "^5.2.4",
     "@vue/cli-plugin-babel": "~4.5.0",

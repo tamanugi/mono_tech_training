@@ -2,8 +2,8 @@
 <div>
   <h3>検索条件</h3>
   <div>
-    <label>User Name</label><input type="text">
-    <button>Search</button>
+    <label>User Name</label><input type="text" v-model="userName">
+    <button @click="onClickSearch">Search</button>
   </div>
   <h3>検索結果</h3>
   <table border="1">
@@ -14,17 +14,9 @@
       </tr>
     </thead>
     <tbody>
-      <tr>
-        <td><a href="detail.html">001</a></td>
-        <td>Tanaka</td>
-      </tr>
-      <tr>
-        <td><a href="detail.html">002</a></td>
-        <td>Tamura</td>
-      </tr>
-      <tr>
-        <td><a href="detail.html">003</a></td>
-        <td>Nakata</td>
+      <tr v-for="user in users" :key="user.id">
+        <td><a href="detail.html">{{user.id}}</a></td>
+        <td>{{user.name}}</td>
       </tr>
     </tbody>
   </table>
@@ -33,12 +25,29 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import HelloWorld from '@/components/HelloWorld.vue'; // @ is an alias to /src
+import axios from 'axios'
+
+const API_ENDPOINT = 'http://localhost:3000'
+
+interface User {
+  id: string;
+  name: string;
+}
 
 @Component({
   components: {
-    HelloWorld,
   },
 })
-export default class Home extends Vue {}
+export default class Home extends Vue {
+  userName = ''
+
+  users:User[] = []
+
+  onClickSearch() {
+    axios.get<User[]>(API_ENDPOINT +  '/users', {params: {name: this.userName}})
+      .then(res => {
+        this.users = res.data 
+      })
+  }
+}
 </script>
