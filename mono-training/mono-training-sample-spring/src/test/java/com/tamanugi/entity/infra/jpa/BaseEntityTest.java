@@ -3,6 +3,8 @@ package com.tamanugi.entity.infra.jpa;
 import javax.persistence.EntityManager;
 import javax.persistence.LockModeType;
 
+import com.tamanugi.domain.user.UsersEntity;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +12,6 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.tamanugi.domain.persion.PersonEntity;
 
 @RunWith(SpringRunner.class)
 @ContextConfiguration
@@ -22,10 +23,10 @@ public class BaseEntityTest {
 
   @Test
   public void test() {
-    em.persist(new PersonEntity(1, "entity"));
+    em.persist(new UsersEntity("entity"));
     em.flush();
 
-    PersonEntity entity = em.find(PersonEntity.class, 1, LockModeType.OPTIMISTIC_FORCE_INCREMENT);
+    UsersEntity entity = em.find(UsersEntity.class, 1, LockModeType.OPTIMISTIC_FORCE_INCREMENT);
     entity.setName("entity1");
 
     em.flush();

@@ -14,9 +14,16 @@
   </type-mapping>
 
   <table-filter match-name="flyway_schema_history" exclude="true" />
+  <table-filter match-name="users" package="com.tamanugi.domain.user" />
 
-  <table-filter match-name="person" package="com.tamanugi.domain.persion"></table-filter>
-  <table-filter match-name="person_relation" package="com.tamanugi.domain.persion"></table-filter>
-  <table-filter match-name="person_address" package="com.tamanugi.domain.persion"></table-filter>
+  <table name="users">
+    <primary-key>
+      <generator class="sequence">
+        <param name="optimizer">none</param>
+        <param name="increment_size">1</param>
+        <param name="sequence_name">users_id_seq</param>
+      </generator>
+    </primary-key>
+  </table>
 
 </hibernate-reverse-engineering>
