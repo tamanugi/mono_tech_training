@@ -36,6 +36,5 @@ public class UsersRepositoryTest {
 
         assertThat(repository.findByNameContaining("hoge").size(), is(1));
         assertThat(repository.findByNameContaining("og").size(), is(2));
-
     }
 }
