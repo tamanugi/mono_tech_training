@@ -1,20 +1,16 @@
 package com.tamanugi.application.user;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import com.tamanugi.domain.user.UsersEntity;
 import com.tamanugi.domain.user.UsersRepository;
 
+import org.hibernate.persister.walking.spi.EntityIdentifierDefinition;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import static org.junit.Assert.assertThat;
 import static org.hamcrest.CoreMatchers.is;
@@ -33,17 +29,35 @@ public class UserApplicationServiceTest {
         assertThat(actual.size(), is(1));
     }
 
+    @Test
+    public void testUpdateUser() {
+        UsersEntity users = sut.createUser(new CreateUserCommand("hoge"));
+        sut.updateUser(new UpdateUserCommand(users.getId(), "fuga"));
+
+        {
+            List<UsersEntity> actual = usersRepository.findByNameContaining("hoge");
+            assertThat(actual.size(), is(0));
+        }
+        {
+            List<UsersEntity> actual = usersRepository.findByNameContaining("fuga");
+            assertThat(actual.size(), is(1));
+        }
+    }
+
     /**
      * TODO: use mockito
      */
     public static class MockUsersRepository implements UsersRepository {
 
-        private List<UsersEntity> store = new ArrayList<>();
+        private Map<Integer, UsersEntity> store = new HashMap<>();
 
         @Override
-        public <S extends UsersEntity> S save(S entity) {
-            store.add(entity);
-            return entity;
+        public UsersEntity save(UsersEntity entity) {
+            int id = Optional.ofNullable(entity.getId()).orElse(store.size() + 1);
+            return this.store.compute(id, (k, v) -> {
+                entity.setId(k);
+                return entity;
+            });
         }
 
         @Override
@@ -54,8 +68,7 @@ public class UserApplicationServiceTest {
 
         @Override
         public Optional<UsersEntity> findById(Integer id) {
-            // TODO Auto-generated method stub
-            return null;
+            return Optional.ofNullable(store.get(id));
         }
 
         @Override
@@ -67,7 +80,7 @@ public class UserApplicationServiceTest {
         @Override
         public Iterable<UsersEntity> findAll() {
             // TODO Auto-generated method stub
-            return store;
+            return store.values();
         }
 
         @Override
@@ -109,7 +122,9 @@ public class UserApplicationServiceTest {
         @Override
         public List<UsersEntity> findByNameContaining(String name) {
             return this.store
+                .entrySet()
                 .stream()
+                .map(kv -> kv.getValue())
                 .filter(v -> v.getName().contains(name))
                 .collect(Collectors.toList());
         }

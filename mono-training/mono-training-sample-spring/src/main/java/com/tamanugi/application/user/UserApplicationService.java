@@ -1,5 +1,7 @@
 package com.tamanugi.application.user;
 
+import java.util.Optional;
+
 import com.tamanugi.domain.user.UsersEntity;
 import com.tamanugi.domain.user.UsersRepository;
 
@@ -14,12 +16,20 @@ public class UserApplicationService {
     
     private final UsersRepository usersRepository;
     
-    public void createUser(CreateUserCommand command) {
+    public UsersEntity createUser(CreateUserCommand command) {
 
         UsersEntity entity = new UsersEntity();
         entity.setName(command.getName());
-        usersRepository.save(entity);
+        return usersRepository.save(entity);
+    }
 
+    public void updateUser(UpdateUserCommand command) {
+        Optional<UsersEntity> target = usersRepository.findById(command.getTargetId());
+
+        target.ifPresent(t -> {
+            t.setName(command.getUpdateName());
+            usersRepository.save(t);
+        });
     }
     
 }
