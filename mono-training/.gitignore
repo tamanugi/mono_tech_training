@@ -1,0 +1,6 @@
+# maven build dist
+.env
+.classpath
+.project
+.settings
+target/
