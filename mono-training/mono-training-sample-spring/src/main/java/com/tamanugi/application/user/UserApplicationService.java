@@ -41,4 +41,7 @@ public class UserApplicationService {
         return usersRepository.findByNameContaining(name);
     }
 
+    public void deleteUser(int id) {
+        usersRepository.deleteById(id);
+    }
 }
