@@ -1,5 +1,6 @@
 package com.tamanugi.application.user;
 
+import java.util.List;
 import java.util.Optional;
 
 import com.tamanugi.domain.user.UsersEntity;
@@ -31,5 +32,13 @@ public class UserApplicationService {
             usersRepository.save(t);
         });
     }
-    
+
+    public Optional<UsersEntity> getUser(int id) {
+        return usersRepository.findById(id);
+    }
+
+    public List<UsersEntity> findByNameContaining(String name) {
+        return usersRepository.findByNameContaining(name);
+    }
+
 }
