@@ -49,8 +49,8 @@ public class UserController {
             .orElse(null);
     }
 
-    @GetMapping("/useres")
-    public GetListResponseDto list(@RequestParam("name") String name) {
+    @GetMapping("/users")
+    public GetListResponseDto list(@RequestParam(value="name", required=false, defaultValue="") String name) {
         List<UsersEntity> users = userApplicationService.findByNameContaining(name);
         return new GetListResponseDto(users);
     }
