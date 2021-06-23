@@ -24,13 +24,12 @@ public class UserApplicationService {
         return usersRepository.save(entity);
     }
 
-    public void updateUser(UpdateUserCommand command) {
-        Optional<UsersEntity> target = usersRepository.findById(command.getTargetId());
-
-        target.ifPresent(t -> {
-            t.setName(command.getUpdateName());
-            usersRepository.save(t);
-        });
+    public Optional<UsersEntity> updateUser(UpdateUserCommand command) {
+        return usersRepository.findById(command.getTargetId())
+                .map(entity -> {
+                    entity.setName(command.getUpdateName());
+                    return usersRepository.save(entity);
+                });
     }
 
     public Optional<UsersEntity> getUser(int id) {
