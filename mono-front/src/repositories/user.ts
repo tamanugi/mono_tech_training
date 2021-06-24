@@ -18,3 +18,7 @@ export async function postUser(name: string) {
   return axios.post(API_ENDPOINT, {name})
           .then(({data}) => console.log(data))
 }
+
+export async function updateUser(user: User) {
+  return axios.patch(API_ENDPOINT + `/${user.id}`, {...user}).then(({data}) => data)
+}
