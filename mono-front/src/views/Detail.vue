@@ -54,6 +54,16 @@
       >
         EDIT
       </v-btn>
+
+      <v-btn
+        color="red"
+        text
+        :loading="edit_loading"
+        :disabled="edit_loading"
+        @click="_delete()"
+      >
+        DELETE
+      </v-btn>
     </v-card-actions>
   </v-card>
 </div>
@@ -62,7 +72,7 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import { User } from '@/types'
-import { findById, updateUser } from '@/repositories/user'
+import { findById, updateUser, deleteUser } from '@/repositories/user'
 
 @Component
 export default class Detail extends Vue {
@@ -93,6 +103,14 @@ export default class Detail extends Vue {
           this.alert = false;
         }, 2000)
       })
+  }
+
+  _delete() {
+    this.edit_loading = true;
+    deleteUser(this.user)
+      .then(data =>
+        this.$router.push('/')
+      )
   }
 }
 </script>

@@ -22,3 +22,7 @@ export async function postUser(name: string) {
 export async function updateUser(user: User) {
   return axios.patch(API_ENDPOINT + `/${user.id}`, {...user}).then(({data}) => data)
 }
+
+export async function deleteUser(user: User) {
+  return axios.delete(API_ENDPOINT + `/${user.id}`)
+}
