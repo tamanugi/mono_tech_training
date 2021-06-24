@@ -9,6 +9,7 @@ import com.tamanugi.application.user.UserApplicationService;
 import com.tamanugi.domain.user.UsersEntity;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import lombok.RequiredArgsConstructor;
 
+@CrossOrigin
 @RestController
 @RequiredArgsConstructor(onConstructor_= {@Autowired})
 public class UserController {
