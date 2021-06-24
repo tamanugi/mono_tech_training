@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -29,7 +30,7 @@ public class UserController {
     private final UserApplicationService userApplicationService;
 
     @PostMapping("/users")
-    public CreateResponseDto create(@ModelAttribute CreateRequetDto request) {
+    public CreateResponseDto create(@RequestBody CreateRequetDto request) {
         CreateUserCommand command = new CreateUserCommand(request.getName());
         UsersEntity entity = userApplicationService.createUser(command);
 
@@ -37,7 +38,7 @@ public class UserController {
     }
 
     @PatchMapping("/users/{id}")
-    public UpdateResponseDto update(@PathVariable("id") int id, @ModelAttribute UpdateRequestDto request) {
+    public UpdateResponseDto update(@PathVariable("id") int id, @RequestBody UpdateRequestDto request) {
         UpdateUserCommand command = new UpdateUserCommand(id, request.getName());
 
         Optional<UsersEntity> optionalEntity = userApplicationService.updateUser(command);

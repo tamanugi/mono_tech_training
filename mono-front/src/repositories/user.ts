@@ -1,15 +1,20 @@
 import axios from 'axios'
 import { User } from '@/types/'
 
-const API_ENDPOINT = 'http://localhost:3000/users';
+const API_ENDPOINT = 'http://localhost:8080/users';
 
 export async function findByName(name: string) {
-  return axios.get<User[]>(API_ENDPOINT, {params: {name}}).then(({data}) => data)
+  return axios.get<{users: User[]}>(API_ENDPOINT, {params: {name}}).then(({data}) => data.users)
 }
 
 export async function findById(id: string) {
-  return axios.get<User[]>(API_ENDPOINT, {params: {id}})
+  return axios.get<User>(API_ENDPOINT + `/${id}`)
     .then(({data}) => {
-      return data && data.length > 0 ? data[0] : null
+      return data;
     })
+}
+
+export async function postUser(name: string) {
+  return axios.post(API_ENDPOINT, {name})
+          .then(({data}) => console.log(data))
 }
