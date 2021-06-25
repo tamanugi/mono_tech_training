@@ -9,17 +9,20 @@ import com.tamanugi.application.user.UserApplicationService;
 import com.tamanugi.domain.user.UsersEntity;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.RequiredArgsConstructor;
 
+@CrossOrigin
 @RestController
 @RequiredArgsConstructor(onConstructor_= {@Autowired})
 public class UserController {
@@ -27,7 +30,7 @@ public class UserController {
     private final UserApplicationService userApplicationService;
 
     @PostMapping("/users")
-    public CreateResponseDto create(@ModelAttribute CreateRequetDto request) {
+    public CreateResponseDto create(@RequestBody CreateRequetDto request) {
         CreateUserCommand command = new CreateUserCommand(request.getName());
         UsersEntity entity = userApplicationService.createUser(command);
 
@@ -35,7 +38,7 @@ public class UserController {
     }
 
     @PatchMapping("/users/{id}")
-    public UpdateResponseDto update(@PathVariable("id") int id, @ModelAttribute UpdateRequestDto request) {
+    public UpdateResponseDto update(@PathVariable("id") int id, @RequestBody UpdateRequestDto request) {
         UpdateUserCommand command = new UpdateUserCommand(id, request.getName());
 
         Optional<UsersEntity> optionalEntity = userApplicationService.updateUser(command);
@@ -49,8 +52,8 @@ public class UserController {
             .orElse(null);
     }
 
-    @GetMapping("/useres")
-    public GetListResponseDto list(@RequestParam("name") String name) {
+    @GetMapping("/users")
+    public GetListResponseDto list(@RequestParam(value="name", required=false, defaultValue="") String name) {
         List<UsersEntity> users = userApplicationService.findByNameContaining(name);
         return new GetListResponseDto(users);
     }
