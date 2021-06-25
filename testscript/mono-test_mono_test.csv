@@ -1,0 +1,20 @@
+﻿No.,項目名,操作,ロケーター形式,ロケーター,データ形式,スクリーンショット,ブレークポイント,ケース_001
+1,,open,,http://localhost:3000//,,,,y
+2,,setWindowSize,,1200x831,,,,y
+3,,click,css,.v-input__slot,,,,y
+4,,click,css,.ma-2,,,,y
+5,,click,id,input-19,,,,y
+6,,input,id,input-19,,,,test_name
+7,,click,css,.v-btn--text > .v-btn__content,,,,y
+8,,click,id,input-11,,,,y
+9,,input,id,input-11,,,,test
+10,,click,css,.mdi-account-search,,,,y
+11,,click,css,tr:nth-child(1) a,,,,y
+12,,click,css,.mdi-pencil,,,,y
+13,,input,id,input-19,,,,hoge
+14,,click,css,.primary--text > .v-btn__content,,,,y
+15,,click,css,.red--text > .v-btn__content,,,,y
+16,,click,id,input-33,,,,y
+17,,input,id,input-33,,,,hoge
+18,,click,css,.mdi-account-search,,,,y
+19,,click,css,.v-main__wrap,,,,y
